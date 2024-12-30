@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Git Master</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Styles for the body with background image */
+        body.welcome-body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('background_stage.webp') no-repeat center center fixed; /* Path to the background image */
+            background-size: cover; /* Scale the image to cover the entire screen */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+    
+        /* Styles for the animated Git logo */
+        .git-logo {
+            width: 200px;
+            height: 200px;
+        }
+
+        .node {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                r: 5;
+            }
+            50% {
+                r: 8;
+            }
+        }
+
+        .branch {
+            stroke-dasharray: 5;
+            animation: flow 2s infinite linear;
+        }
+
+        @keyframes flow {
+            from {
+                stroke-dashoffset: 10;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body class="welcome-body">
+    <div class="welcome-container">
+        <h1 class="welcome-title">Welcome to <span class="highlight">Git Master</span></h1>
+        <p class="welcome-subtitle">The ultimate Git GUI experience</p>
+
+        <div class="animated-icon">
+            <!-- Git logo with animation -->
+            <svg class="git-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <!-- Diamond shape -->
+                <polygon points="50,5 95,50 50,95 5,50" fill="url(#gradient)" />
+                <defs>
+                    <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#F05133" />
+                        <stop offset="100%" stop-color="#FF7043" />
+                    </linearGradient>
+                </defs>
+
+                <!-- Branch lines -->
+                <line x1="30" y1="30" x2="50" y2="50" class="branch" stroke="#ffffff" stroke-width="2" />
+                <line x1="50" y1="50" x2="70" y2="30" class="branch" stroke="#ffffff" stroke-width="2" />
+                <line x1="50" y1="50" x2="30" y2="70" class="branch" stroke="#ffffff" stroke-width="2" />
+                <line x1="50" y1="50" x2="70" y2="70" class="branch" stroke="#ffffff" stroke-width="2" />
+
+                <!-- Nodes -->
+                <circle cx="30" cy="30" class="node" fill="#ffffff" />
+                <circle cx="50" cy="50" class="node" fill="#ffffff" />
+                <circle cx="70" cy="30" class="node" fill="#ffffff" />
+                <circle cx="30" cy="70" class="node" fill="#ffffff" />
+                <circle cx="70" cy="70" class="node" fill="#ffffff" />
+            </svg>
+        </div>
+        
+        
+        <button id="selectFileBtn" class="animated-btn">Select Folder</button>
+        <div id="statusMessage" class="status-message"></div>
+        
+    </div>
+    <script src="renderer.js"></script>
+</body>
+</html>

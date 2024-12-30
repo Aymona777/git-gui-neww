@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staging Area</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body.stage-body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('background_stage.webp') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 1200px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            color: #e74c3c;
+        }
+
+        .staging-area {
+            margin-bottom: 30px;
+        }
+
+        .staging-area h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .file-list {
+            background: #34495e;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .file-list ul {
+            list-style: none;
+        }
+
+        .file-list li {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #f39c12;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-list li:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .file-list button {
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .file-list button:hover {
+            background-color: #c0392b;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .actions button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            background-color: #c0392b;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .actions button:hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+        }
+
+        .system-message {
+            margin-top: 20px;
+            background: #f39c12;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+
+        .visualize-btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            background-color: #c0392b;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .visualize-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .branch-select {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .branch-select select {
+            padding: 10px;
+            font-size: 1.1rem;
+            background-color: #34495e;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .branch-select select:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body class="stage-body">
+    <div class="container">
+        <header>
+            <h1>Staging Area</h1>
+        </header>
+
+        <div class="staging-area">
+            <h2>Staged Files</h2>
+            
+            <div class="file-list">
+                <ul>
+                    <li>
+                        file 1
+                        <button class="delete-btn">Delete</button>
+                    </li>
+                    <li>
+                        file 2
+                        <button class="delete-btn">Delete</button>
+                    </li>
+                    <li>
+                        file 3
+                        <button class="delete-btn">Delete</button>
+                    </li>
+                </ul>
+            </div>
+            
+
+            <button class="visualize-btn" id="visualizeBtn">Visualization</button>
+        </div>
+
+        <div class="branch-select">
+            <select id="branchSelect">
+                <option value="main">branches</option>
+            </select>
+        </div>
+
+        <div class="actions">
+            <button id="addBtn">Add</button>
+            <button id="commitBtn">Commit</button>
+        </div>
+
+        <div class="system-message" id="systemMessage">
+            Commit successful!
+        </div>
+    </div>
+    <input type="hidden" id="folderPath" />
+    <input type="hidden" id="filePath" />
+
+    <script>
+        const commitBtn = document.getElementById('commitBtn');
+        const systemMessage = document.getElementById('systemMessage');
+
+        commitBtn.addEventListener('click', function() {
+            systemMessage.style.display = 'block';
+            setTimeout(() => {
+                systemMessage.style.display = 'none';
+            }, 3000);
+        });
+
+        const visualizeBtn = document.getElementById('visualizeBtn');
+        visualizeBtn.addEventListener('click', function() {
+            window.location.href = 'visualization.html';
+        });
+    </script>
+    <script src="renderer.js"></script>
+</body>
+</html>

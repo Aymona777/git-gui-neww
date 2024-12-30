@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Visualization</title>
+    
+    <style>
+        /* General styling for the visualization page */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: url('visulizationn.webp') no-repeat center center fixed; /* Path to your background image */
+            background-size: cover; /* Scale the image to cover the entire screen */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            color: #ffff;
+        }
+
+        #visualization-area {
+            width: 80%;
+            height: 500px;
+            border: 2px solid #c0392b;
+            border-radius: 10px;
+            background-color: rgba(30, 39, 46, 0.8); /* Add semi-transparent background to enhance visibility */
+            padding: 20px;
+        }
+
+        #controls {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            background-color: #c0392b;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background-color: #d35400;
+        }
+
+        #backBtn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Git Branch Visualization</h1>
+    
+    <div id="visualization-area"></div>
+
+    <div id="controls">
+        <button id="mergeBtn">Merge</button>
+        <button id="checkoutBtn">Checkout Branch</button>
+        <button id="createBranchBtn">Create Branch</button>
+        <button id="deleteBranchBtn">Delete Branch</button>
+    </div>
+
+    <button id="backBtn">Back to Main Page</button>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        // Sample Git visualization using D3.js
+        const width = document.getElementById('visualization-area').clientWidth;
+        const height = document.getElementById('visualization-area').clientHeight;
+
+        const svg = d3.select("#visualization-area")
+                      .append("svg")
+                      .attr("width", width)
+                      .attr("height", height);
+
+        const nodes = [
+            { id: 'master', x: 100, y: 100 },
+            { id: 'feature1', x: 300, y: 200 },
+            { id: 'feature2', x: 300, y: 400 },
+            { id: 'dev', x: 500, y: 300 }
+        ];
+
+        const links = [
+            { source: 'master', target: 'feature1' },
+            { source: 'master', target: 'feature2' },
+            { source: 'feature1', target: 'dev' }
+        ];
+
+        // Create lines between branches
+        svg.selectAll("line")
+           .data(links)
+           .enter()
+           .append("line")
+           .attr("x1", d => nodes.find(n => n.id === d.source).x)
+           .attr("y1", d => nodes.find(n => n.id === d.source).y)
+           .attr("x2", d => nodes.find(n => n.id === d.target).x)
+           .attr("y2", d => nodes.find(n => n.id === d.target).y)
+           .attr("stroke", "white")
+           .attr("stroke-width", 2);
+
+        // Create circles for each branch (node)
+        svg.selectAll("circle")
+           .data(nodes)
+           .enter()
+           .append("circle")
+           .attr("cx", d => d.x)
+           .attr("cy", d => d.y)
+           .attr("r", 20)
+           .attr("fill", "#f39c12");
+
+        // Add labels for each branch
+        svg.selectAll("text")
+           .data(nodes)
+           .enter()
+           .append("text")
+           .attr("x", d => d.x + 25)
+           .attr("y", d => d.y + 5)
+           .attr("fill", "white")
+           .text(d => d.id);
+
+        // Button event handlers
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.location.href = "index.html";  // Replace with your actual main page
+        });
+
+        document.getElementById('mergeBtn').addEventListener('click', () => {
+            alert("Merge functionality coming soon by kimoz!");
+        });
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            alert("Checkout functionality coming soon by kimoz!");
+        });
+
+        document.getElementById('createBranchBtn').addEventListener('click', () => {
+            alert("Create branch functionality coming soon by kimoz!");
+        });
+
+        document.getElementById('deleteBranchBtn').addEventListener('click', () => {
+            alert("Delete branch functionality coming soon by kimoz!");
+        });
+    </script>
+</body>
+</html>
